@@ -1,0 +1,26 @@
+identity:
+  author: proxmint
+  name: proxmint
+  label:
+    en_US: Proxmint
+  description:
+    en_US: Read web pages through residential, datacenter or 4G/5G mobile proxies, from the country and city you choose.
+  icon: icon.png
+  tags:
+    - utilities
+credentials_for_provider:
+  api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: Proxmint API key
+    placeholder:
+      en_US: pmk_...
+    help:
+      en_US: Create a key under Settings in the Proxmint dashboard. Saving it reads your account and uses no bandwidth.
+    url: https://proxmint.com/dashboard/settings
+tools:
+  - tools/fetch_page.yaml
+extra:
+  python:
+    source: provider/proxmint.py

@@ -1,0 +1,92 @@
+identity:
+  name: fetch_page
+  author: proxmint
+  label:
+    en_US: Fetch page
+description:
+  human:
+    en_US: Read a web page through a Proxmint residential, datacenter or mobile proxy, from the country and city you choose.
+  llm: >-
+    Read a web page through a proxy, so the request comes from a residential, datacenter or mobile IP,
+    optionally in a chosen country and city. Returns the page as readable text (or raw HTML), plus the final
+    URL, HTTP status and title. Use it for pages that block cloud servers or show different content in
+    different countries.
+parameters:
+  - name: url
+    type: string
+    required: true
+    label:
+      en_US: URL
+    human_description:
+      en_US: The http or https URL of the page to read.
+    llm_description: The absolute http or https URL of the page to read.
+    form: llm
+  - name: country
+    type: string
+    required: false
+    label:
+      en_US: Country
+    human_description:
+      en_US: Two-letter country code for the exit IP, for example us or de. Empty means any country.
+    llm_description: Optional two-letter country code for the exit IP, for example "us" or "de". Leave empty for any country.
+    form: llm
+  - name: city
+    type: string
+    required: false
+    label:
+      en_US: City
+    human_description:
+      en_US: City for the exit IP, for example New York. Needs a country, and can meter at twice the bandwidth.
+    llm_description: Optional city for the exit IP, for example "New York". Only use it together with a country, and only when the task needs that city.
+    form: llm
+  - name: product
+    type: select
+    required: false
+    default: residential
+    label:
+      en_US: Proxy product
+    human_description:
+      en_US: Which of your Proxmint products the request uses.
+    options:
+      - value: residential
+        label:
+          en_US: Residential
+      - value: premium-residential
+        label:
+          en_US: Premium residential
+      - value: datacenter
+        label:
+          en_US: Datacenter
+      - value: mobile
+        label:
+          en_US: Mobile (4G/5G)
+    form: form
+  - name: output
+    type: select
+    required: false
+    default: text
+    label:
+      en_US: Output
+    human_description:
+      en_US: Readable text for a model, or the raw HTML.
+    options:
+      - value: text
+        label:
+          en_US: Readable text
+      - value: html
+        label:
+          en_US: Raw HTML
+    form: form
+  - name: max_chars
+    type: number
+    required: false
+    default: 50000
+    min: 1000
+    label:
+      en_US: Max characters
+    human_description:
+      en_US: Longer pages are cut at this length.
+    form: form
+extra:
+  python:
+    source: tools/fetch_page.py
